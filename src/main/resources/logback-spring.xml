@@ -1,0 +1,38 @@
+<configuration>
+
+    <!-- Console Appender: Display INFO level logs -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender: Store DEBUG level logs -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/application.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger for INFO level logs in Console -->
+    <logger name="ROOT" level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <!-- Logger for DEBUG level logs in File -->
+    <logger name="DEBUG_LOGGER" level="DEBUG">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <!-- Root Logger: INFO level by default, so it will use CONSOLE -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <!-- Add File Appender specifically for DEBUG logging -->
+    <logger name="ROOT" level="DEBUG">
+        <appender-ref ref="FILE" />
+    </logger>
+
+</configuration>

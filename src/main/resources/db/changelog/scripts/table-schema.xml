@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240817-create-t-fact" author="ayush.pattanayak">
+        <createTable tableName="RC_T_FACT" schemaName="redcloud">
+            <column name="msisdn" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="msisdn_pk" nullable="false"/>
+            </column>
+            <column name="cam_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="waitover_flag" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
