@@ -40,4 +40,22 @@ public class AppConfig {
     @Value("${spring.kafka.producer.properties.schema.registry.url}")
     private String kafkaProducerSchema;
 
+    @Value("${kafka.consumer.topic.name}")
+    private String kafkaConsumerTopic;
+
+    @Value("${spring.kafka.consumer.group-id}")
+    private String kafkaConsumerGrpId;
+
+    @Value("${spring.kafka.consumer.auto-offset-reset}")
+    private String kafkaConsumerOffsetReset;
+
+    @Value("${spring.kafka.consumer.key-deserializer}")
+    private String kafkaConsumerSerializerKey;
+
+    @Value("${spring.kafka.consumer.value-deserializer}")
+    private String kafkaConsumerSerializerValue;
+
+    @Value("${spring.kafka.listener.missing-topics-fatal}")
+    private String kafkaListenerMissingTopics;
+
 }

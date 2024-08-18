@@ -39,7 +39,7 @@ public class ProducerService {
      * The createTopicIfNotExists function.
      */
     public void createTopicIfNotExists() throws ExecutionException, InterruptedException {
-        log.info("createTopicIfNotExists :: " + Status.PROCESSING + " started at " + utils.getCurrentTimestamp());
+        log.info("createTopicIfNotExists :: {} started at {}", Status.PROCESSING, utils.getCurrentTimestamp());
         Properties configs = new Properties();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, appConfig.getKafkaBootstrapServer());
 
@@ -56,13 +56,13 @@ public class ProducerService {
                 if (!existingTopics.contains(topicName)) {
                     NewTopic newTopic = new NewTopic(topicName, appConfig.getTopicPartitions(), appConfig.getTopicReplicas());
                     adminClient.createTopics(Collections.singletonList(newTopic)).all().get();
-                    log.info(Status.SUCCESS + " :: New Topic " + topicName + " created at " + utils.getCurrentTimestamp());
+                    log.info("{} :: New Topic {} created at {}", Status.SUCCESS, topicName, utils.getCurrentTimestamp());
                 } else {
-                    log.info(Status.FAILED + " :: Topic exists already : " + topicName);
+                    log.info("{} :: Topic exists already : {}", Status.FAILED, topicName);
                 }
             }
         } catch (Exception e) {
-            log.error("createTopicIfNotExists :: " + Status.ERROR + " faced at " + utils.getCurrentTimestamp(), e);
+            log.error("createTopicIfNotExists :: {} faced at {}", Status.ERROR, utils.getCurrentTimestamp(), e);
         }
     }
 
@@ -74,11 +74,11 @@ public class ProducerService {
      * @param message -  the message to be sent to topic.
      */
     public void produceRecordsToKafka(String topicName, String message) {
-        log.info("produceRecordsToKafka :: Message received and producing to topic :: " + topicName);
+        log.info("produceRecordsToKafka :: Message received and producing to topic :: {}", topicName);
         try {
             kafkaTemplate.send(topicName, message);
         } catch (Exception e){
-            log.error("produceRecordsToKafka :: " + Status.ERROR + " faced at " + utils.getCurrentTimestamp());
+            log.error("produceRecordsToKafka :: {} faced at {}", Status.ERROR, utils.getCurrentTimestamp());
         }
     }
 }
