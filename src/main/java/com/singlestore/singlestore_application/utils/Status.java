@@ -5,5 +5,5 @@ public enum Status {
     SUCCESS,
     FAILED,
     PROCESSING,
-    ERROR404
+    ERROR
 }

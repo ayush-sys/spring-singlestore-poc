@@ -10,9 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
-    @Value("${producer.topic}")
-    private String producerTopic;
-
     @Value("${server.port}")
     private String serverPort;
 
@@ -21,5 +18,26 @@ public class AppConfig {
 
     @Value("${time.pattern}")
     private String timePattern;
+
+    @Value("${kafka.producer.topic.list}")
+    private String kafkaProducerTopicList;
+
+    @Value("${kafka.topic.partitions}")
+    private int topicPartitions;
+
+    @Value("${kafka.topic.replicas}")
+    private short topicReplicas;
+
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String kafkaBootstrapServer;
+
+    @Value("${spring.kafka.producer.key-serializer}")
+    private String kafkaProducerSerializerKey;
+
+    @Value("${spring.kafka.producer.value-serializer}")
+    private String kafkaProducerSerializerValue;
+
+    @Value("${spring.kafka.producer.properties.schema.registry.url}")
+    private String kafkaProducerSchema;
 
 }
