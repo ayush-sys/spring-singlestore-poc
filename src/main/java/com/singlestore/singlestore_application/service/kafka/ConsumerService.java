@@ -2,7 +2,7 @@ package com.singlestore.singlestore_application.service.kafka;
 
 
 import com.singlestore.singlestore_application.config.AppConfig;
-import com.singlestore.singlestore_application.utils.Status;
+import com.singlestore.singlestore_application.utils.StatusMessage;
 import com.singlestore.singlestore_application.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -36,7 +36,7 @@ public class ConsumerService {
     public void listen(String message) {
         // message processing logic here
         try {
-            log.info("{} message received from kafka at {}", Status.PROCESSING, utils.getCurrentTimestamp());
+            log.info("{} message received from kafka at {}", StatusMessage.PROCESSING, utils.getCurrentTimestamp());
             synchronized (lock){
                 this.message = message;
             }

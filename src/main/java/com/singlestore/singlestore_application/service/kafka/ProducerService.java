@@ -2,7 +2,7 @@ package com.singlestore.singlestore_application.service.kafka;
 
 
 import com.singlestore.singlestore_application.config.AppConfig;
-import com.singlestore.singlestore_application.utils.Status;
+import com.singlestore.singlestore_application.utils.StatusMessage;
 import com.singlestore.singlestore_application.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -39,7 +39,7 @@ public class ProducerService {
      * The createTopicIfNotExists function.
      */
     public void createTopicIfNotExists() throws ExecutionException, InterruptedException {
-        log.info("createTopicIfNotExists :: {} started at {}", Status.PROCESSING, utils.getCurrentTimestamp());
+        log.info("createTopicIfNotExists :: {} started at {}", StatusMessage.PROCESSING, utils.getCurrentTimestamp());
         Properties configs = new Properties();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, appConfig.getKafkaBootstrapServer());
 
@@ -56,13 +56,13 @@ public class ProducerService {
                 if (!existingTopics.contains(topicName)) {
                     NewTopic newTopic = new NewTopic(topicName, appConfig.getTopicPartitions(), appConfig.getTopicReplicas());
                     adminClient.createTopics(Collections.singletonList(newTopic)).all().get();
-                    log.info("{} :: New Topic {} created at {}", Status.SUCCESS, topicName, utils.getCurrentTimestamp());
+                    log.info("{} :: New Topic {} created at {}", StatusMessage.SUCCESS, topicName, utils.getCurrentTimestamp());
                 } else {
-                    log.info("{} :: Topic exists already : {}", Status.FAILED, topicName);
+                    log.info("{} :: Topic exists already : {}", StatusMessage.FAILED, topicName);
                 }
             }
         } catch (Exception e) {
-            log.error("createTopicIfNotExists :: {} faced at {}", Status.ERROR, utils.getCurrentTimestamp(), e);
+            log.error("createTopicIfNotExists :: {} faced at {}", StatusMessage.ERROR, utils.getCurrentTimestamp(), e);
         }
     }
 
@@ -78,7 +78,7 @@ public class ProducerService {
         try {
             kafkaTemplate.send(topicName, message);
         } catch (Exception e){
-            log.error("produceRecordsToKafka :: {} faced at {}", Status.ERROR, utils.getCurrentTimestamp());
+            log.error("produceRecordsToKafka :: {} faced at {}", StatusMessage.ERROR, utils.getCurrentTimestamp());
         }
     }
 }
