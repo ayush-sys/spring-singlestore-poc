@@ -28,34 +28,22 @@ public class AppConfig {
     @Value("${kafka.topic.replicas}")
     private short topicReplicas;
 
-    @Value("${spring.kafka.bootstrap-servers}")
+    @Value("${kafka.bootstrap-servers}")
     private String kafkaBootstrapServer;
 
-    @Value("${spring.kafka.producer.key-serializer}")
-    private String kafkaProducerSerializerKey;
-
-    @Value("${spring.kafka.producer.value-serializer}")
-    private String kafkaProducerSerializerValue;
-
-    @Value("${spring.kafka.producer.properties.schema.registry.url}")
+    @Value("${kafka.producer.properties.schema.registry.url}")
     private String kafkaProducerSchema;
 
     @Value("${kafka.consumer.topic.name}")
     private String kafkaConsumerTopic;
 
-    @Value("${spring.kafka.consumer.group-id}")
+    @Value("${kafka.consumer.group-id}")
     private String kafkaConsumerGrpId;
 
-    @Value("${spring.kafka.consumer.auto-offset-reset}")
+    @Value("${kafka.consumer.auto-offset-reset}")
     private String kafkaConsumerOffsetReset;
 
-    @Value("${spring.kafka.consumer.key-deserializer}")
-    private String kafkaConsumerSerializerKey;
-
-    @Value("${spring.kafka.consumer.value-deserializer}")
-    private String kafkaConsumerSerializerValue;
-
-    @Value("${spring.kafka.listener.missing-topics-fatal}")
+    @Value("${kafka.listener.missing-topics-fatal}")
     private String kafkaListenerMissingTopics;
 
 }

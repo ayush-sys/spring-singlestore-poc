@@ -1,13 +1,12 @@
 package com.singlestore.singlestore_application;
 
-import com.singlestore.singlestore_application.service.kafka.ProducerService;
+import com.singlestore.singlestore_application.kafka.config.KafkaConfig;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.util.concurrent.ExecutionException;
 
 
@@ -16,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 public class SinglestoreApplication {
 
 	@Autowired
-	private ProducerService producerService;
+	private KafkaConfig kafkaConfig;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SinglestoreApplication.class, args);
@@ -30,7 +29,7 @@ public class SinglestoreApplication {
 	 * */
 	@PostConstruct
 	public void postIntialization() throws ExecutionException, InterruptedException {
-		producerService.createTopicIfNotExists();
+		kafkaConfig.createTopicIfNotExists();
 	}
 
 }
