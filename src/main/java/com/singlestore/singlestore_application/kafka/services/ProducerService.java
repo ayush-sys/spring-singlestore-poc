@@ -7,6 +7,7 @@ import com.singlestore.singlestore_application.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,10 @@ public class ProducerService {
     @Autowired
     private Utils utils;
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
-    public ProducerService(KafkaTemplate<String, String> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    public ProducerService(KafkaTemplate<String, String> kafkaTemplate) { this.kafkaTemplate = kafkaTemplate; }
 
     /**
      * The kafkaTemplate function.
@@ -36,9 +36,7 @@ public class ProducerService {
      * @return KafkaTemplate - the kafka template
      * */
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(kafkaConfig.producerFactory());
-    }
+    public KafkaTemplate<String, String> kafkaTemplate() { return new KafkaTemplate<>(kafkaConfig.producerFactory()); }
 
     /**
      * The publishMessage function.

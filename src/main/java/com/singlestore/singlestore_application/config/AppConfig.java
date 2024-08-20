@@ -28,7 +28,7 @@ public class AppConfig {
     @Value("${kafka.topic.replicas}")
     private short topicReplicas;
 
-    @Value("${kafka.bootstrap-servers}")
+    @Value("${kafka.bootstrap.servers}")
     private String kafkaBootstrapServer;
 
     @Value("${kafka.producer.properties.schema.registry.url}")

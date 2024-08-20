@@ -27,7 +27,7 @@ public class ConsumerService {
 
     private final Object lock = new Object();
 
-    @KafkaListener(topics = "${kafka.topic.name}", groupId = "${kafka.consumer.group-id}")
+    @KafkaListener(topics = "${kafka.consumer.topic.name}", groupId = "${kafka.consumer.group-id}")
     public void onReceive(String message) {
         // message processing logic here
         try {
