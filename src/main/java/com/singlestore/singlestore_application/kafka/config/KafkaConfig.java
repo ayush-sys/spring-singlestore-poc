@@ -10,6 +10,7 @@ import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,19 +24,20 @@ import java.util.concurrent.ExecutionException;
 
 /** The KafkaConfig class. */
 
-
 @Slf4j
 @Configuration
 @EnableKafka
 public class KafkaConfig {
 
-    @Autowired
-    private AppConfig appConfig;
+    private final AppConfig appConfig;
+
+    private final Utils utils;
 
     @Autowired
-    private Utils utils;
-
-    public KafkaConfig(Utils utils) { this.utils = utils; }
+    public KafkaConfig(AppConfig appConfig, Utils utils) {
+        this.appConfig = appConfig;
+        this.utils = utils;
+    }
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -51,8 +53,8 @@ public class KafkaConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, appConfig.getKafkaBootstrapServer());
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, appConfig.getKafkaConsumerGrpId());
-        configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(configProps);
     }
 
@@ -62,6 +64,11 @@ public class KafkaConfig {
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
+    }
+
+    @Bean
+    public KafkaTemplate<String, String> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
     }
 
     /**
@@ -82,7 +89,7 @@ public class KafkaConfig {
             // Fetch the existing topics
             Set<String> existingTopics = adminClient.listTopics().names().get();
 
-            // Iterate over each topic and create new topic
+            // Iterate over each topic and create new topic if not exists
             for (String topicName : topics) {
                 topicName = topicName.trim();  // Trim any whitespace around the topic name
                 if (!existingTopics.contains(topicName)) {
@@ -90,7 +97,7 @@ public class KafkaConfig {
                     adminClient.createTopics(Collections.singletonList(newTopic)).all().get();
                     log.info("{} :: New Topic {} created at {}", StatusMessage.SUCCESS, topicName, utils.getCurrentTimestamp());
                 } else {
-                    log.info("{} :: Topic exists already : {}", StatusMessage.FAILED, topicName);
+                    log.info("{} :: Topic already exists: {}", StatusMessage.FAILED, topicName);
                 }
             }
         } catch (Exception e) {

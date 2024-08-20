@@ -42,4 +42,9 @@ public class RequestHandler {
         return service.getAllRecords();
     }
 
+    @GetMapping("/produce-message")
+    public void produceMessage() {
+        service.fetchAndProduceRecords();
+    }
+
 }

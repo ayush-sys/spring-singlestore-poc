@@ -23,7 +23,6 @@ import java.util.List;
 public class S2ApplicationService {
 
     @Autowired
-    @Lazy
     private ProducerService producerService;
 
     @Autowired
