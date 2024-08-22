@@ -2,8 +2,10 @@ package com.singlestore.singlestore_application.controller;
 
 
 import com.singlestore.singlestore_application.config.AppConfig;
+import com.singlestore.singlestore_application.config.ConsulConfig;
 import com.singlestore.singlestore_application.model.FactModel;
 import com.singlestore.singlestore_application.service.S2ApplicationService;
+import com.singlestore.singlestore_application.utils.Constants;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /** The request controller. */
 
@@ -23,6 +27,9 @@ public class RequestHandler {
 
     @Autowired
     private AppConfig appConfig;
+
+    @Autowired
+    private ConsulConfig consulConfig;
 
     @Autowired
     private S2ApplicationService service;
@@ -42,4 +49,13 @@ public class RequestHandler {
         return service.getAllRecords();
     }
 
+    @GetMapping("/get-consul-property")
+    public ResponseEntity<String> getConsulConfigProperties() {
+        Map<String, String> consulMsgMap = new HashMap<>();
+        consulMsgMap.put(String.valueOf(Constants.MESSAGE), consulConfig.getMessage());
+        consulMsgMap.put(String.valueOf(Constants.TIMEZONE), consulConfig.getTimezone());
+        consulMsgMap.put(String.valueOf(Constants.TIME_PATTERN), consulConfig.getTimePattern());
+        return ResponseEntity.ok("application started on port" + appConfig.getServerPort()
+                + " Message :: " + consulMsgMap.toString());
+    }
 }

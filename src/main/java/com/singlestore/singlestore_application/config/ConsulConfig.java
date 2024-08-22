@@ -2,21 +2,19 @@ package com.singlestore.singlestore_application.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 
-/** The application config. */
-
 @Data
+@RefreshScope
 @Configuration
-public class AppConfig {
+@ConfigurationProperties(prefix = "global")
+public class ConsulConfig {
 
-    @Value("${server.port}")
-    private String serverPort;
+    private String message;
 
-    @Value("${timezone}")
     private String timezone;
 
-    @Value("${time.pattern}")
     private String timePattern;
-
 }
