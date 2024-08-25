@@ -60,22 +60,19 @@ public class S2ApplicationService {
      * */
     public void fetchAndProduceRecords(){
         List<FactModel> factList = factRepository.findEntriesForWaitoverFlag("0");
-
-        // New JSONArray for storing fact records
-        JSONArray factJsonArr = new JSONArray();
         try {
             log.info("fetchAndProduceRecords :: {} started to fetch and produce records at {}", StatusMessage.PROCESSING, utils.getCurrentTimestamp());
-            // New JSONObject to store records in
-            // { "MSISDN":10098, "CAM_ID":"CAM098", "TRANSACTION_ID":"TX098" }
-            JSONObject factJson = new JSONObject();
+
             for (FactModel factRecord : factList){
+                // New JSONObject to store records
+                JSONObject factJson = new JSONObject();
                 factJson.put(String.valueOf(Constants.MSISDN), factRecord.getMsisdn());
                 factJson.put(String.valueOf(Constants.CAM_ID), factRecord.getCamId());
                 factJson.put(String.valueOf(Constants.TRANSACTION_ID), factRecord.getTransactionId());
-                factJsonArr.put(factJson);
+                // Produce message to kafka topic
+                // { "MSISDN":10098, "CAM_ID":"CAM098", "TRANSACTION_ID":"TX098" }
+                producerService.publishMessage("ecmpwaitover", factJson.toString());
             }
-            // Produce message to kafka topic
-            producerService.publishMessage("ecmpwaitover", factJsonArr.toString());
         } catch (Exception e){
             log.error("{} faced while producing records to kafka at {} | Exception :: {}", StatusMessage.ERROR, utils.getCurrentTimestamp(), e.getMessage());
         }
