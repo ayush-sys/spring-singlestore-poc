@@ -4,22 +4,37 @@
                    xsi:schemaLocation="
                         http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="20240817-create-t-fact" author="ayush.pattanayak">
-        <createTable tableName="RC_T_FACT" schemaName="redcloud">
-            <column name="msisdn" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="msisdn_pk" nullable="false"/>
+    <changeSet id="20240928" author="ayush.pattanayak">
+        <createTable tableName="USER_FACT" schemaName="redcloud">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="user_id_pk" nullable="true"/>
             </column>
-            <column name="cam_id" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+            <column name="first_name" type="VARCHAR(155)">
+                <constraints nullable="true"/>
             </column>
-            <column name="transaction_id" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+            <column name="last_name" type="VARCHAR(155)">
+                <constraints nullable="true"/>
             </column>
-            <column name="waitover_flag" type="INT">
-                <constraints nullable="false"/>
+            <column name="username" type="VARCHAR(155)">
+                <constraints nullable="true"/>
             </column>
-            <column name="modified_time" type="TIMESTAMP">
-                <constraints nullable="false"/>
+            <column name="email" type="VARCHAR(155)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="gender" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_state" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_login_time" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="refresh_duration" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="token" type="VARCHAR(155)">
+                <constraints nullable="true"/>
             </column>
         </createTable>
     </changeSet>

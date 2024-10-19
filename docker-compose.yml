@@ -34,22 +34,20 @@ services:
     networks:
       - kafka-network
 
-  singlestore:
-    image: ghcr.io/singlestore-labs/singlestoredb-dev
-    container_name: singlestoredb
-    environment:
-      - ROOT_PASSWORD=S2admin@2024
+  postgres:
+    image: postgres:15
     ports:
-      - "3306:3306"
-      - "8082:8080"  # Change the singlestore host port to 8082, keeping container port 8080
-      - "9000:9000"
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: pgadmin
+      POSTGRES_PASSWORD: pgadmin@2024
+      POSTGRES_DB: redcloud
     volumes:
-      - "my_cool_volume:/data"
-    networks:
-      - kafka-network
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
 
 networks:
   kafka-network:
     driver: bridge
-volumes:
-  my_cool_volume:

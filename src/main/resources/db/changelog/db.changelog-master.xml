@@ -8,6 +8,5 @@
             http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <include file="classpath:/db/changelog/scripts/table-schema.xml"/>
-    <include file="classpath:/db/changelog/scripts/insert-data.sql"/>
 
 </databaseChangeLog>

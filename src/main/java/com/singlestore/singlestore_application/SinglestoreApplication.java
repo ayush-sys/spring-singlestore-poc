@@ -1,6 +1,6 @@
 package com.singlestore.singlestore_application;
 
-import com.singlestore.singlestore_application.kafka.config.KafkaConfig;
+import com.singlestore.singlestore_application.kafka.producer.IProducerService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.annotation.PostConstruct;
@@ -11,11 +11,11 @@ import java.util.concurrent.ExecutionException;
 
 
 @SpringBootApplication		// Enable Configuration, EnableAutoConfiguration and ComponentScan
-@OpenAPIDefinition(info = @Info(title = "Singlestore application", version = "1.0", description = "Run data pipeline"))
+@OpenAPIDefinition(info = @Info(title = "Data application", version = "1.0", description = "Run data pipeline"))
 public class SinglestoreApplication {
 
 	@Autowired
-	private KafkaConfig kafkaConfig;
+	private IProducerService producerService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SinglestoreApplication.class, args);
@@ -23,13 +23,13 @@ public class SinglestoreApplication {
 
 
 	/**
-	 * The postIntialization function.
+	 * The postInitialization function.
 	 *
-	 * Intializes the services post application beans are created
+	 * Initializes the services post application beans are created
 	 * */
 	@PostConstruct
-	public void postIntialization() throws ExecutionException, InterruptedException {
-		kafkaConfig.createTopicIfNotExists();
+	public void postConstruct() throws ExecutionException, InterruptedException {
+		producerService.createTopicIfNotExists();
 	}
 
 }

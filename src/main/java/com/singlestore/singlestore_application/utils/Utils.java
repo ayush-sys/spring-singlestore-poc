@@ -1,24 +1,30 @@
 package com.singlestore.singlestore_application.utils;
 
 import com.singlestore.singlestore_application.config.AppConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
-/** The custom utility functions class. */
-
+@Slf4j
 @Component
+/** The Utils class */
 public class Utils {
 
     @Autowired
     private AppConfig appConfig;
 
-    public String getCurrentTimestamp() {
-        SimpleDateFormat sdf = new SimpleDateFormat(appConfig.getTimePattern());
-        sdf.setTimeZone(TimeZone.getTimeZone(appConfig.getTimezone()));
-        return sdf.format(new Date());
+    /**
+     * The getCurrentTime function
+     *
+     * @param timeFormat - the current time should be formatted as per param
+     * @return the current time of application
+     * */
+    public String getCurrentTime(String timeFormat){
+        ZonedDateTime currentDateTime = ZonedDateTime.now(java.time.ZoneId.of(appConfig.getTimeZone()));
+        return currentDateTime.format(DateTimeFormatter.ofPattern(timeFormat));
     }
+
 }

@@ -15,7 +15,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Singlestore Data Ingestion Pipeline")
+                        .title("Data Pipeline project")
                         .version("1.0")
                         .description("This is a spring application ingesting data into kafka, docs by OpenAPI"));
     }

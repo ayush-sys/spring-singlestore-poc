@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 
-/** The Singlestore database config. */
+/** The database config. */
 
 @Data
 @Configuration
-public class S2DbConfig {
+public class DbConfig {
 
-    /* The Singlestore database config bean. */
+    /* The database config bean. */
     @Bean
     @Primary
     @ConfigurationProperties(prefix = "spring.datasource.hikari")
